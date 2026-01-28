@@ -1,0 +1,16 @@
+# 10 things I do not yet understand (from index.html)
+
+1. the meaning of <meta in lines 4 and 5
+2. the meaning of "UTF-8" and "viewport" from lines 4 and 5
+3. in lines 86-89, why it goes in order of style, head, body, header, with lines 
+    underneath but no clear way to track what is being said about each
+4. the meaning od <div in line 109
+5. does layout/style have to be written before content?
+6. the meaning of </strong> in lines 111 through 115
+7. the meaning of </p>, and if that is different from <p>
+8. does it use standard hex codes for colors? 
+9. why is it often that when words are in parenthesis, "--" is placed before the 
+    word? (ex/ (--primary) on line 36)
+10. specific formatting/style rules for the categories background, padding, border 
+    radius, text-align, font weight, margin-top, border-left, grid-template-columns, 
+    display, gap, etc.
