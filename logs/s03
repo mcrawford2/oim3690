@@ -1,5 +1,28 @@
-# 10 things I do not yet understand (from index.html)
+# New Prompt, using replit 
+Using the description below, generate a simple HTML file called index.html only. 
 
+Description: 
+I am Miranda Crawford, a Babson College student. 
+I am making a website to be used as one part of a broader website making portfolio. 
+This website is for trip planning. It can include both a suggested trips section based 
+on different types of trips, as well as the main section that would be for self inputting 
+and creating the details of self planned trip. Inputs include budget, itinerary, locations, 
+activities, outfits, food, energy level.  These can be per the entire trip and per day. 
+There can also be a map integration with flagged places/activities/restaurants. With a user 
+account, users can save trips and come back to them later.  
+
+Requirements: 
+- One single HTML file (index.html) 
+- No external frameworks 
+- Clean and simple layout 
+- Include: 
+  - Header with my name 
+  - Short introduction 
+  - A section for skills or interests 
+
+
+
+  # 10 things I do not yet understand (from index.html)
 1. the meaning of <meta in lines 4 and 5
 2. the meaning of "UTF-8" and "viewport" from lines 4 and 5
 3. in lines 86-89, why it goes in order of style, head, body, header, with lines 
