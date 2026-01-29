@@ -1,0 +1,20 @@
+# What I learned Thursday 1/29
+
+# HTML learning
+- !doctype in the first line, shows type of document for interpretation
+- /html in the first and last line means everything in the middle applies
+- meta name, description that relates to what is seen in internet browsing and potentially what may be used as keywords for that site
+- front end source code is public for whatever you have access to
+- website (displays info, portfolio/blog, read focused, static) vs web app (lets you do things, gmail/figma, interactive, task focused, complex functionality)
+- curl is a tool to download text
+s
+# URL anatomy
+- https://                  protocol
+- www.babson.edu            domain name
+- /academics/index.html     path
+
+# Web request
+1. DNS lookup (domain system name, hosint system assigns IP address that DNS translates)
+2. HTTP request (hypertext transfer protocol)
+3. server response (200:ok, 404:not found, 500:server error)
+4. browser rendering
