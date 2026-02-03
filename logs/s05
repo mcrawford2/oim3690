@@ -1,0 +1,16 @@
+# What I learned
+- DNS: domain name system/service, looks like a table that converts IP addresses
+- 404: error/can't find, 200: works
+- when viewing a webpage, the computer downloads all files that are allowed of it that aren't already stored
+- GET vs POST: get retrieves data without changing server, asks browser for information. post sends data to the back end and hope back up uses it to create/update
+- windows key + period key = emojis
+
+# Activity: Peer Questions
+1. the meaning of the first couple lines of all out codes (4+5) after <head>, including "UTF-8" and "viewpoint"
+2. how is the structure of the HTML code is controlled, general syntax and organization
+3. the meaning of <div or <div class
+4. why some websites might have <span and others dont
+5. how is the code organized by color, (body, root, and container have yellow text while font, color, and margin have blue text)
+
+# Updates to Website
+- 
