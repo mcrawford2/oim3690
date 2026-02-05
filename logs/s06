@@ -1,0 +1,24 @@
+# Review
+- three languages of the web: HTML, CSS, Javascript
+    - HTML: defines content and structure. HyperTextMarkupLanguage
+    - CSS: visual presentation, colors fonts and styling
+    - Javascript: interactivity, animations and buttons
+- how to investigate what is wrong on a website: inspect, depends on specific issue
+- how to use DevTools to change the headline of any website: inspect, locate headline, edit, apply/enter, only you will see the changes
+
+# What I learned
+- alt + shift + f: format code
+- indentation matters to readers of the code, not for visual browser purposes
+- HTML is not a programming language, has a one to one matching relationship so no variables or logic
+- <> is a tag
+- HTML features
+    - <h1></h1>: headings, levels 1-6
+    - <p></p>: paragraphs
+    - <a></a>: links
+    - <img></img>: images
+    - <div></div>: generic container
+- attribute: extra information inside the opening tag. ex/ <a href=https://...>... </a>
+- <li> defines a list item
+# Extra files
+- s06.demo.html
+- about-me.html for homework
