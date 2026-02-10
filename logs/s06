@@ -19,6 +19,7 @@
     - <div></div>: generic container
 - attribute: extra information inside the opening tag. ex/ <a href=https://...>... </a>
 - <li> defines a list item
+
 # Extra files
 - s06.demo.html
 - about-me.html for homework
