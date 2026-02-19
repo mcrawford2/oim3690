@@ -87,3 +87,13 @@ footer {
 .btn:hover, button:hover {
     background: var(--coral-dark);
 }
+
+p.yellow {
+    color: yellow;
+}   
+
+* {
+    font-family: 'Times New Roman', Times, serif;
+    border: 1px solid black;
+    margin: 0;
+}
