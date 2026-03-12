@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>To Do List</title>
+	<style>
+		:root {
+			--pastel-pink: #ffd8e8;
+			--pastel-yellow: #fff5bf;
+			--pastel-blue: #d8ebff;
+			--pastel-green: #dbf5d5;
+			--pastel-violet: #e8ddff;
+			--bg: #f6f9ff;
+			--card: #fffef7;
+			--text: #30435f;
+			--muted: #5f6f8f;
+			--accent: #8fcf86;
+			--accent-dark: #72bc68;
+			--border: #cfc5ef;
+			--danger: #7752a3;
+			--danger-bg: var(--pastel-pink);
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			margin: 0;
+			font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+			background: radial-gradient(circle at top, var(--pastel-violet) 0%, var(--pastel-blue) 48%, var(--pastel-yellow) 100%);
+			color: var(--text);
+			min-height: 100vh;
+			display: grid;
+			place-items: center;
+			padding: 24px;
+		}
+
+		.app {
+			width: min(680px, 100%);
+			background: var(--card);
+			border: 1px solid var(--border);
+			border-radius: 14px;
+			box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+			padding: 24px;
+		}
+
+		h1 {
+			margin: 0 0 16px;
+			font-size: 1.8rem;
+			letter-spacing: 0.3px;
+		}
+
+		.input-row {
+			display: grid;
+			grid-template-columns: 1fr auto;
+			gap: 10px;
+			margin-bottom: 12px;
+		}
+
+		input[type="text"] {
+			width: 100%;
+			padding: 12px 14px;
+			border: 1px solid var(--border);
+			border-radius: 10px;
+			font-size: 1rem;
+			outline: none;
+		}
+
+		input[type="text"]:focus {
+			border-color: var(--accent);
+			box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
+		}
+
+		button {
+			border: none;
+			border-radius: 10px;
+			padding: 10px 14px;
+			font-size: 0.95rem;
+			cursor: pointer;
+			transition: background-color 0.2s ease;
+		}
+
+		.add-btn {
+			background: var(--accent);
+			color: #fff;
+			font-weight: 600;
+		}
+
+		.add-btn:hover {
+			background: var(--accent-dark);
+		}
+
+		.toolbar {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin: 8px 0 14px;
+			color: var(--muted);
+			gap: 10px;
+			flex-wrap: wrap;
+		}
+
+		.clear-btn {
+			background: var(--danger-bg);
+			color: var(--danger);
+			border: 1px solid #f4b9d6;
+			padding: 8px 12px;
+		}
+
+		.clear-btn:hover {
+			background: #f9c8df;
+		}
+
+		ul {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			display: grid;
+			gap: 8px;
+		}
+
+		.todo-item {
+			display: grid;
+			grid-template-columns: auto 1fr auto;
+			align-items: center;
+			gap: 10px;
+			padding: 10px;
+			border: 1px solid var(--border);
+			border-radius: 10px;
+			background: var(--pastel-blue);
+		}
+
+		.todo-text {
+			word-break: break-word;
+		}
+
+		.todo-item.completed .todo-text {
+			text-decoration: line-through;
+			color: var(--muted);
+		}
+
+		.delete-btn {
+			background: transparent;
+			color: var(--danger);
+			border: 1px solid transparent;
+			padding: 6px 10px;
+		}
+
+		.delete-btn:hover {
+			border-color: #f4b9d6;
+			background: var(--danger-bg);
+		}
+
+		.empty {
+			margin: 8px 0 0;
+			color: var(--muted);
+			font-style: italic;
+		}
+
+		.long-term-card {
+			width: min(520px, 100%);
+			margin: 18px auto 0;
+			padding: 14px;
+			border: 1px solid var(--border);
+			border-radius: 12px;
+			background: var(--pastel-yellow);
+		}
+
+		.long-term-card h2 {
+			margin: 0 0 10px;
+			font-size: 1.05rem;
+		}
+
+		.long-term-card .input-row {
+			margin-bottom: 10px;
+		}
+
+		.long-term-card input[type="text"] {
+			padding: 10px 12px;
+			font-size: 0.92rem;
+			background: #fffefc;
+		}
+
+		.long-term-card .add-btn {
+			padding: 9px 12px;
+			font-size: 0.88rem;
+		}
+
+		.long-term-card ul {
+			gap: 6px;
+		}
+
+		.long-term-card .todo-item {
+			padding: 8px;
+			background: var(--pastel-green);
+		}
+
+		.long-term-card .delete-btn {
+			padding: 5px 8px;
+		}
+
+		.celebration-layer {
+			position: fixed;
+			inset: 0;
+			pointer-events: none;
+			overflow: hidden;
+			z-index: 50;
+		}
+
+		.confetti-piece {
+			position: fixed;
+			width: 8px;
+			height: 12px;
+			border-radius: 3px;
+			opacity: 0.95;
+			animation: confetti-burst 900ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+		}
+
+		@keyframes confetti-burst {
+			0% {
+				transform: translate(0, 0) rotate(0deg) scale(1);
+				opacity: 1;
+			}
+			100% {
+				transform: translate(var(--travel-x), var(--travel-y)) rotate(var(--spin)) scale(0.45);
+				opacity: 0;
+			}
+		}
+
+		@media (max-width: 520px) {
+			.app {
+				padding: 18px;
+			}
+
+			.input-row {
+				grid-template-columns: 1fr;
+			}
+
+			.add-btn {
+				width: 100%;
+			}
+		}
+	</style>
+</head>
+<body>
+	<main class="app">
+		<h1>To Do List</h1>
+
+		<form id="todo-form" class="input-row" autocomplete="off">
+			<input id="todo-input" type="text" placeholder="What do you need to do?" maxlength="120" />
+			<button class="add-btn" type="submit">Add Task</button>
+		</form>
+
+		<section class="toolbar" aria-live="polite">
+			<span id="remaining-count">0 items left</span>
+			<button id="clear-completed" class="clear-btn" type="button">Clear completed</button>
+		</section>
+
+		<ul id="todo-list"></ul>
+		<p id="empty-state" class="empty">No todos yet. Add your first one above.</p>
+
+		<section class="long-term-card" aria-label="Long Term To Do List">
+			<h2>Long Term To Do List</h2>
+			<form id="long-term-form" class="input-row" autocomplete="off">
+				<input id="long-term-input" type="text" placeholder="Add a long-term task" maxlength="160" />
+				<button class="add-btn" type="submit">Add Long Term Task</button>
+			</form>
+			<ul id="long-term-list"></ul>
+			<p id="long-term-empty" class="empty">No long-term tasks yet.</p>
+		</section>
+	</main>
+
+	<script>
+		const STORAGE_KEY = "vanilla-todo-items";
+		const LONG_TERM_STORAGE_KEY = "vanilla-long-term-items";
+
+		const form = document.getElementById("todo-form");
+		const input = document.getElementById("todo-input");
+		const list = document.getElementById("todo-list");
+		const emptyState = document.getElementById("empty-state");
+		const remainingCount = document.getElementById("remaining-count");
+		const clearCompletedBtn = document.getElementById("clear-completed");
+		const longTermForm = document.getElementById("long-term-form");
+		const longTermInput = document.getElementById("long-term-input");
+		const longTermList = document.getElementById("long-term-list");
+		const longTermEmpty = document.getElementById("long-term-empty");
+		const CELEBRATION_COLORS = ["#ffd8e8", "#fff5bf", "#d8ebff", "#dbf5d5", "#e8ddff"];
+
+		const celebrationLayer = document.createElement("div");
+		celebrationLayer.className = "celebration-layer";
+		document.body.appendChild(celebrationLayer);
+
+		let todos = loadTodos(STORAGE_KEY);
+		let longTermTodos = loadTodos(LONG_TERM_STORAGE_KEY);
+
+		function loadTodos(key) {
+			try {
+				const raw = localStorage.getItem(key);
+				if (!raw) {
+					return [];
+				}
+				const parsed = JSON.parse(raw);
+				return Array.isArray(parsed) ? parsed : [];
+			} catch {
+				return [];
+			}
+		}
+
+		function saveTodos(key, items) {
+			localStorage.setItem(key, JSON.stringify(items));
+		}
+
+		function celebrateTask(checkboxElement) {
+			if (!checkboxElement) {
+				return;
+			}
+
+			const rect = checkboxElement.getBoundingClientRect();
+			const originX = rect.left + rect.width / 2;
+			const originY = rect.top + rect.height / 2;
+			const confettiCount = 22;
+
+			for (let index = 0; index < confettiCount; index += 1) {
+				const piece = document.createElement("span");
+				piece.className = "confetti-piece";
+				piece.style.left = `${originX}px`;
+				piece.style.top = `${originY}px`;
+				piece.style.backgroundColor = CELEBRATION_COLORS[Math.floor(Math.random() * CELEBRATION_COLORS.length)];
+
+				const angle = (Math.PI * 2 * index) / confettiCount + (Math.random() - 0.5) * 0.55;
+				const distance = 45 + Math.random() * 75;
+				const travelX = Math.cos(angle) * distance;
+				const travelY = Math.sin(angle) * distance - (20 + Math.random() * 35);
+
+				piece.style.setProperty("--travel-x", `${travelX}px`);
+				piece.style.setProperty("--travel-y", `${travelY}px`);
+				piece.style.setProperty("--spin", `${Math.random() * 760 - 380}deg`);
+				piece.style.animationDuration = `${720 + Math.random() * 360}ms`;
+
+				piece.addEventListener("animationend", () => {
+					piece.remove();
+				});
+
+				celebrationLayer.appendChild(piece);
+			}
+		}
+
+		function createTodoItem(todo, onToggle, onDelete) {
+			const item = document.createElement("li");
+			item.className = `todo-item ${todo.completed ? "completed" : ""}`;
+
+			const checkbox = document.createElement("input");
+			checkbox.type = "checkbox";
+			checkbox.checked = todo.completed;
+			checkbox.setAttribute("aria-label", "Mark task complete");
+			checkbox.addEventListener("change", () => onToggle(todo.id, checkbox.checked, checkbox));
+
+			const text = document.createElement("span");
+			text.className = "todo-text";
+			text.textContent = todo.text;
+
+			const deleteBtn = document.createElement("button");
+			deleteBtn.className = "delete-btn";
+			deleteBtn.type = "button";
+			deleteBtn.textContent = "Delete";
+			deleteBtn.addEventListener("click", () => onDelete(todo.id));
+
+			item.append(checkbox, text, deleteBtn);
+			return item;
+		}
+
+		function render() {
+			list.innerHTML = "";
+
+			todos.forEach((todo) => {
+				const item = createTodoItem(todo, toggleTodo, deleteTodo);
+				list.appendChild(item);
+			});
+
+			const incompleteCount = todos.filter((todo) => !todo.completed).length;
+			const itemLabel = incompleteCount === 1 ? "item" : "items";
+			remainingCount.textContent = `${incompleteCount} ${itemLabel} left`;
+
+			emptyState.hidden = todos.length > 0;
+			clearCompletedBtn.disabled = !todos.some((todo) => todo.completed);
+		}
+
+		function renderLongTerm() {
+			longTermList.innerHTML = "";
+
+			longTermTodos.forEach((todo) => {
+				const item = createTodoItem(todo, toggleLongTermTodo, deleteLongTermTodo);
+				longTermList.appendChild(item);
+			});
+
+			longTermEmpty.hidden = longTermTodos.length > 0;
+		}
+
+		function addTodo(text) {
+			todos.unshift({
+				id: Date.now() + Math.random(),
+				text,
+				completed: false,
+			});
+			saveTodos(STORAGE_KEY, todos);
+			render();
+		}
+
+		function toggleTodo(id, isCompleted, checkboxElement) {
+			todos = todos.map((todo) =>
+				todo.id === id ? { ...todo, completed: isCompleted } : todo
+			);
+			saveTodos(STORAGE_KEY, todos);
+			if (isCompleted) {
+				celebrateTask(checkboxElement);
+			}
+			render();
+		}
+
+		function deleteTodo(id) {
+			todos = todos.filter((todo) => todo.id !== id);
+			saveTodos(STORAGE_KEY, todos);
+			render();
+		}
+
+		function clearCompleted() {
+			todos = todos.filter((todo) => !todo.completed);
+			saveTodos(STORAGE_KEY, todos);
+			render();
+		}
+
+		function addLongTermTodo(text) {
+			longTermTodos.unshift({
+				id: Date.now() + Math.random(),
+				text,
+				completed: false,
+			});
+			saveTodos(LONG_TERM_STORAGE_KEY, longTermTodos);
+			renderLongTerm();
+		}
+
+		function toggleLongTermTodo(id, isCompleted, checkboxElement) {
+			longTermTodos = longTermTodos.map((todo) =>
+				todo.id === id ? { ...todo, completed: isCompleted } : todo
+			);
+			saveTodos(LONG_TERM_STORAGE_KEY, longTermTodos);
+			if (isCompleted) {
+				celebrateTask(checkboxElement);
+			}
+			renderLongTerm();
+		}
+
+		function deleteLongTermTodo(id) {
+			longTermTodos = longTermTodos.filter((todo) => todo.id !== id);
+			saveTodos(LONG_TERM_STORAGE_KEY, longTermTodos);
+			renderLongTerm();
+		}
+
+		form.addEventListener("submit", (event) => {
+			event.preventDefault();
+			const text = input.value.trim();
+			if (!text) {
+				input.focus();
+				return;
+			}
+			addTodo(text);
+			form.reset();
+			input.focus();
+		});
+
+		clearCompletedBtn.addEventListener("click", clearCompleted);
+
+		longTermForm.addEventListener("submit", (event) => {
+			event.preventDefault();
+			const text = longTermInput.value.trim();
+			if (!text) {
+				longTermInput.focus();
+				return;
+			}
+			addLongTermTodo(text);
+			longTermForm.reset();
+			longTermInput.focus();
+		});
+
+		render();
+		renderLongTerm();
+	</script>
+</body>
+</html>
