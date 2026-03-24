@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Save Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        textarea {
+            width: 320px;
+            padding: 8px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simple Text Demo</h1>
+    <p>Type a message and click save.</p>
+    <textarea id="message" rows="4" placeholder="Write your message here..."></textarea>
+    <button id="save-btn">Save Message</button>
+    <p id="status-text">Not saved yet.</p>
+
+    <script>
+        const STORAGE_KEY = "saved-message";
+        const message = document.getElementById("message");
+        const button = document.getElementById("save-btn");
+        const statusText = document.getElementById("status-text");
+
+        message.value = localStorage.getItem(STORAGE_KEY) || "";
+
+        button.addEventListener("click", function () {
+            localStorage.setItem(STORAGE_KEY, message.value);
+            message.style.color = "green";
+            statusText.textContent = "Message saved.";
+            console.log("Save button clicked");
+        });
+    </script>
+</body>
+</html>
