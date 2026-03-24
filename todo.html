@@ -37,7 +37,7 @@
 			padding: 24px;
 		}
 
-		.app {
+		.app {									/* main container for todo app */
 			width: min(680px, 100%);
 			background: var(--card);
 			border: 1px solid var(--border);
@@ -218,7 +218,7 @@
 			animation: confetti-burst 900ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 		}
 
-		@keyframes confetti-burst {
+		@keyframes confetti-burst {								/* annimated sequence */
 			0% {
 				transform: translate(0, 0) rotate(0deg) scale(1);
 				opacity: 1;
@@ -272,7 +272,7 @@
 		</section>
 	</main>
 
-	<script>
+	<script>											/* const = constant variables that can't be reassigned */
 		const STORAGE_KEY = "vanilla-todo-items";
 		const LONG_TERM_STORAGE_KEY = "vanilla-long-term-items";
 
@@ -292,10 +292,10 @@
 		celebrationLayer.className = "celebration-layer";
 		document.body.appendChild(celebrationLayer);
 
-		let todos = loadTodos(STORAGE_KEY);
+		let todos = loadTodos(STORAGE_KEY);				/* let = variables that can be reassigned */
 		let longTermTodos = loadTodos(LONG_TERM_STORAGE_KEY);
 
-		function loadTodos(key) {
+		function loadTodos(key) {						/* function = reusable block of code, runs when you call it */
 			try {
 				const raw = localStorage.getItem(key);
 				if (!raw) {
@@ -484,7 +484,7 @@
 			longTermInput.focus();
 		});
 
-		render();
+		render();					/* redraw lists after data changes */
 		renderLongTerm();
 	</script>
 </body>
