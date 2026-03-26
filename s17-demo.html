@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>S17 Demo</title>
+</head>
+<body>
+    <script>
+
+        //Strings:
+        // const name = window.prompt("What is your name?");//This will pop up a prompt asking for the user's name and store it in the variable 'name'.
+
+        const firstName = "Michael";
+        const lastName = "Scott";
+        let name = `${firstName} ${lastName}`;
+
+        name = "Dwight Schrute";
+        const message = `Hello, ${name}! Welcome to Javascript.`;
+        console.log(message);
+
+        const age = 45;
+        console.log(`In 5 years, ${name} will be ${age + 5} years old.`);
+
+        //Boolean:
+        let isEmployed = true;
+        console.log(`Is ${name} employed? ${isEmployed}`);
+
+        if (isEmployed) {
+            console.log(`${name} is currently employed.`);
+        } else {
+            console.log(`${name} is currently unemployed.`);
+        }
+
+
+    </script>
+</body>
+</html>

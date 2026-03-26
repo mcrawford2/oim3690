@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Greeting</title>
+</head>
+<body>
+	<h1>Greeting</h1>
+    <input id="name" type = "text" placeholder="Enter your name">
+	<select id="language">
+		<option value="en">English</option>
+		<option value="es">Spanish</option>
+		<option value="fr">French</option>
+		<option value="de">German</option>
+		<option value="zh">Chinese</option>
+	</select>
+	<button>Greeting</button>
+	<p></p>
+
+	<script>
+		const greetingButton = document.querySelector("button");
+		const greetingParagraph = document.querySelector("p");
+		const languageSelect = document.querySelector("#language");
+
+		greetingButton.addEventListener("click", () => {
+			let name = document.getElementById("name").value || "friend";
+			let language = languageSelect.value;
+			let greetingWord = "Hello";
+
+			if (language === "es") {
+				greetingWord = "Hola";
+			} else if (language === "fr") {
+				greetingWord = "Bonjour";
+			} else if (language === "de") {
+				greetingWord = "Hallo";
+			} else if (language === "zh") {
+				greetingWord = "Ni hao";
+			}
+
+			greetingParagraph.textContent = `${greetingWord}, ${name}!`;
+		});
+	</script>
+</body>
+</html>
