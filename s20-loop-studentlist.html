@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loop Examples</title>
+</head>
+<body>
+    <h2>Student Grade List</h2>
+    <label for="name-input">Name: <input type="text" id="name-input" placeholder="Student name"></label>
+    <label for="grade-input">Grade: <input type="number" min="0" max="100" id="grade-input" placeholder="0-100"></label>
+    <button id="add-student-btn">Add Student</button>
+    <div id="student-list"></div>
+
+    <script>
+    const addStudentBtn = document.querySelector('#add-student-btn');
+    const nameInput = document.querySelector('#name-input');
+    const gradeInput = document.querySelector('#grade-input');
+    const list = document.querySelector('#student-list');
+
+    const students = [];
+
+    function getLetterGrade(score) {
+      if (score >= 90) return 'A';
+      if (score >= 80) return 'B';
+      if (score >= 70) return 'C';
+      if (score >= 60) return 'D';
+      return 'F';
+    }
+
+    function renderStudents() {
+      list.textContent = '';
+
+      for (let i = 0; i < students.length; i++) {
+        const card = document.createElement('div');
+        card.textContent = `${students[i].name}: ${students[i].score}% (${students[i].letter})`;
+        list.appendChild(card);
+      }
+    }
+
+    addStudentBtn.addEventListener('click', function() {
+      const name = nameInput.value.trim();
+      const score = parseInt(gradeInput.value, 10);
+
+      if (!name || Number.isNaN(score) || score < 0 || score > 100) {
+        list.textContent = 'Enter a valid name and grade from 0 to 100.';
+        return;
+      }
+
+      students.push({
+        name: name,
+        score: score,
+        letter: getLetterGrade(score)
+      });
+
+      renderStudents();
+      nameInput.value = '';
+      gradeInput.value = '';
+      nameInput.focus();
+    });
+    </script>
+</body>
+</html>
