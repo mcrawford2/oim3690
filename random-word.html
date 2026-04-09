@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Word</title>
+</head>
+<body>
+    <button>Get Random Word</button>
+    <p id="result"></p>
+
+    <script>
+        const btn = document.querySelector('button');
+        const result = document.querySelector('#result');
+
+        async function getRandomWord() {
+            try {
+                result.textContent = 'loading...';
+                const response = await fetch('https://oim.108122.xyz/words/random');
+                const word = await response.json();
+                result.textContent = word;
+            } catch (error) {
+                result.textContent = 'Error: ' + error.message;
+            }
+        }
+
+        btn.addEventListener('click', getRandomWord);
+    </script>
+</body>
+</html>

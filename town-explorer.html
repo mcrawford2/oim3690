@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Town Explorer</title>
+</head>
+<body>
+    <h1>MA Towns Explorer</h1>
+    <input type="text" id="search" placeholder="Search towns by name...">
+    <p id="info"></p>
+    <div id="result"></div>
+
+    <script>
+        const searchInput = document.querySelector('#search');
+        const infoText = document.querySelector('#info');
+        const result = document.querySelector('#result');
+        let allTowns = [];
+
+        async function loadTowns() {
+            try {
+                result.textContent = 'Loading...';
+                const response = await fetch('https://oim.108122.xyz/mass', {
+                    headers: {
+                        "X-Token": "mirandamiranda",
+                    },
+                });
+                const data = await response.json();
+                allTowns = data.data;
+                displayTowns(allTowns);
+            } catch (error) {
+                result.textContent = 'Error: ' + error.message;
+            }
+        }
+
+        function displayTowns(towns) {
+            result.innerHTML = '';
+            const toShow = towns.slice(0, 10);
+            
+            infoText.textContent = `Showing ${toShow.length} of ${towns.length} towns`;
+
+            // Find largest population
+            let largestTown = null;
+            let maxPop = 0;
+            for (const town of towns) {
+                if (town.population > maxPop) {
+                    maxPop = town.population;
+                    largestTown = town;
+                }
+            }
+
+            if (largestTown) {
+                const largestDiv = document.createElement('div');
+                largestDiv.style.fontWeight = 'bold';
+                largestDiv.style.marginBottom = '20px';
+                largestDiv.style.padding = '10px';
+                largestDiv.style.backgroundColor = '#ffeb3b';
+                largestDiv.innerHTML = `<strong>Largest Town:</strong> ${largestTown.name} (${largestTown.population.toLocaleString()} people)`;
+                result.appendChild(largestDiv);
+            }
+
+            toShow.forEach(town => {
+                const townDiv = document.createElement('div');
+                townDiv.className = 'town';
+                townDiv.innerHTML = `<strong>${town.name}</strong> - ${town.county} County - ${town.population.toLocaleString()} people`;
+                result.appendChild(townDiv);
+            });
+        }
+
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const filtered = allTowns.filter(town => town.name.toLowerCase().includes(query));
+            displayTowns(filtered);
+        });
+
+        // Load towns on page load
+        loadTowns();
+    </script>
+</body>
+</html>
