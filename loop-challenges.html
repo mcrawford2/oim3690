@@ -18,22 +18,22 @@
         <script>
         const numbers = [4, -8, 15, -16, 23, 42, -3];
 
-        const numberList = document.querySelector('#number-list');
+        const numberList = document.querySelector('#number-list'); //selects element that matches the id number-list and assigns it to the variable numberList
         const sumResult = document.querySelector('#sum-result');
         const maxResult = document.querySelector('#max-result');
         const positiveResult = document.querySelector('#positive-result');
         const evenResult = document.querySelector('#even-result');
 
-        let total = 0;
+        let total = 0;  //starting points
         let largest = numbers[0];
         let positiveCount = 0;
         const evenNumbers = [];
 
-        for (let i = 0; i < numbers.length; i++) {
+        for (let i = 0; i < numbers.length; i++) {  //loops through the numbers array
             const value = numbers[i];
 
-            const li = document.createElement('li');
-            li.textContent = value;
+            const li = document.createElement('li');    //creates a new list item element
+            li.textContent = value;     //sets the text content of the list item to the current value from the numbers array
             numberList.appendChild(li);
 
             total += value;
@@ -51,7 +51,7 @@
             }
         }
 
-        sumResult.textContent = `Sum: ${total}`;
+        sumResult.textContent = `Sum: ${total}`;    //sets the text content to display the wanted outputs
         maxResult.textContent = `Max: ${largest}`;
         positiveResult.textContent = `Count positives: ${positiveCount}`;
         evenResult.textContent = `Even numbers: ${evenNumbers.join(', ')}`;

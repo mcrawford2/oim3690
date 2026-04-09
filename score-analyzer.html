@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Score Analyzer</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: Arial; max-width: 600px; margin: 0 auto; padding: 20px; }
+        .section { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px #0001; }
+        
+        .stat-item { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #eee; }
+        .stat-item:last-child { border: none; }
+
+        .bar-item { margin-bottom: 12px; }
+        .bar-label { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 3px; font-size: 14px; }
+        .bar { height: 24px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; color: white; font-weight: bold; border-radius: 3px; }
+        
+        .green { background: #27ae60; }
+        .orange { background: #f39c12; }
+        .red { background: #e74c3c; }
+
+        .input-row { display: flex; gap: 8px; }
+        input { flex: 1; padding: 6px 8px; border: 1px solid #ddd; border-radius: 3px; }
+        button { padding: 6px 12px; background: #3498db; color: white; border: none; cursor: pointer; border-radius: 3px; }
+        button:hover { background: #2980b9; }
+    </style>
+</head>
+<body>
+    <h1>Score Analyzer</h1>
+
+    <div class="section">
+        <h2>Statistics</h2>
+        <div class="stat-item"><span>Total Scores:</span><span id="total">0</span></div>
+        <div class="stat-item"><span>Average:</span><span id="average">0</span></div>
+        <div class="stat-item"><span>Highest:</span><span id="highest">0</span></div>
+        <div class="stat-item"><span>Lowest:</span><span id="lowest">0</span></div>
+        <div class="stat-item"><span>Passing (≥60):</span><span id="passing">0</span></div>
+    </div>
+
+    <div class="section">
+        <h2>Score Breakdown</h2>
+        <div id="bars"></div>
+    </div>
+
+    <div class="section">
+        <h2>Grade Distribution</h2>
+        <div id="distribution"></div>
+    </div>
+
+    <div class="section">
+        <h2>Add New Score</h2>
+        <div class="input-row">
+            <input type="number" id="scoreInput" min="0" max="100" placeholder="Score (0-100)">
+            <button onclick="addScore()">Add</button>
+        </div>
+    </div>
+
+    <script>
+        let scores = [88, 72, 95, 63, 81, 56, 90];
+
+        //Part 1
+        function getGrade(score) {
+            if (score >= 90) return 'A';
+            if (score >= 80) return 'B';
+            if (score >= 70) return 'C';
+            if (score >= 60) return 'D';
+            return 'F';
+        }
+
+        //Part 2
+        function getColor(score) {
+            const grade = getGrade(score);
+            return (grade === 'A' || grade === 'B') ? 'green' : (grade === 'F') ? 'red' : 'orange';
+        }
+
+        function updateStats() {    //calculates and displays statistics
+            const avg = (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1);
+            document.getElementById('total').textContent = scores.length;
+            document.getElementById('average').textContent = avg;
+            document.getElementById('highest').textContent = Math.max(...scores);
+            document.getElementById('lowest').textContent = Math.min(...scores);
+            document.getElementById('passing').textContent = scores.filter(s => s >= 60).length;
+        }
+
+        //Part 3
+        function updateBars() {     //created a horizontal bar for each score with color and grade label
+            document.getElementById('bars').innerHTML = scores.map((s, i) => `
+                <div class="bar-item">
+                    <div class="bar-label"><span>Score ${i+1}:</span><span>${s}</span></div>
+                    <div class="bar ${getColor(s)}" style="width:${s}%">${getGrade(s)}</div>
+                </div>
+            `).join('');
+        }
+
+        function updateDistribution() {     //creates and displays grade distribution chart
+            const counts = { A:0, B:0, C:0, D:0, F:0 };
+            scores.forEach(s => counts[getGrade(s)]++);
+            const max = Math.max(...Object.values(counts));
+            const gradeScores = { A: 95, B: 85, C: 75, D: 65, F: 50 };
+            document.getElementById('distribution').innerHTML = Object.entries(counts).map(([g, c]) => `
+                <div class="bar-item" style="display:flex; align-items:center; gap:8px">
+                    <div style="width:30px; font-weight:bold">${g}</div>
+                    <div class="bar ${getColor(gradeScores[g])}" style="flex:1; width:${(c/max)*100}%">${c}</div>
+                </div>
+            `).join('');
+        }
+
+        function updateAll() {      //refreshes when scores are updated
+            updateStats();
+            updateBars();
+            updateDistribution();
+        }
+
+        //Part 4
+        function addScore() {
+            const input = document.getElementById('scoreInput');
+            const score = parseFloat(input.value);      //parseFloat converts a string into a decimal number
+            
+            if (isNaN(score) || score < 0 || score > 100) {         //isNAN, is Not a Number, checks whether a value is a number
+                alert('Please enter a valid score between 0 and 100');      //alert given for if not a number
+                return;
+            }
+            
+            scores.push(score);
+            input.value = '';
+            updateAll();
+        }
+
+        updateAll();
+    </script>
+</body>
+</html>
