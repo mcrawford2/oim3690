@@ -8,3 +8,5 @@ Name: Miranda Crawford
 - [Personal Website](https://github.com/mcrawford2/mcrawford2.github.io)
 - [MP1: Website for Someone Else](https://github.com/mcrawford2/first.gen.hub)
 - [MP2: Interactive Web Tool](https://github.com/mcrawford2/random.wheel.web)
+- [MP3: API-Powered App](https://github.com/mcrawford2/artist.explorer)
+- [Final Project](https://github.com/mcrawford2/trip.planner)
