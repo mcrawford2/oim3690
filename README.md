@@ -10,3 +10,4 @@ Name: Miranda Crawford
 - [MP2: Interactive Web Tool](https://github.com/mcrawford2/random.wheel.web)
 - [MP3: API-Powered App](https://github.com/mcrawford2/artist.explorer)
 - [Final Project](https://github.com/mcrawford2/trip.planner)
+- [Extra Credit](https://github.com/mcrawford2/banana)
